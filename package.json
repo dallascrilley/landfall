@@ -50,10 +50,5 @@
     "tsx": "^4.20.0",
     "typescript": "^5.9.0",
     "vitest": "^4.1.10"
-  },
-  "pnpm": {
-    "overrides": {
-      "sharp": "0.35.3"
-    }
   }
 }
