@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SYNTHETIC WordPress eXtended RSS (WXR) export.
+
+  Harborline Coffee Roasters is an invented company. Every author, post, page,
+  image and URL in this file was written for this repository as a test fixture.
+  It is not an export of any real site, and no client content appears here.
+
+  Shape is deliberately awkward on purpose, because real exports are:
+    - a static front page whose slug is not "/"
+    - a nested child page (/about/our-roastery/)
+    - posts on a flat /{slug}/ permalink that collide with the page namespace
+    - a post whose slug equals a page slug (permalink shadowing)
+    - Yoast SEO postmeta, categories, tags, attachments, a draft, a private page
+    - page-builder residue and WordPress runtime markup in the body HTML
+-->
+<rss version="2.0"
+  xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+  xmlns:content="http://wordpress.org/export/1.2/content/"
+  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:wp="http://wordpress.org/export/1.2/">
+  <channel>
+    <title>Harborline Coffee Roasters</title>
+    <link>https://harborline.example.com</link>
+    <description>Small-batch coffee roasted on the north quay.</description>
+    <language>en-US</language>
+    <wp:wxr_version>1.2</wp:wxr_version>
+    <wp:base_site_url>https://harborline.example.com</wp:base_site_url>
+    <wp:base_blog_url>https://harborline.example.com</wp:base_blog_url>
+
+    <wp:author>
+      <wp:author_id>1</wp:author_id>
+      <wp:author_login>mara</wp:author_login>
+      <wp:author_display_name><![CDATA[Mara Vance]]></wp:author_display_name>
+    </wp:author>
+    <wp:author>
+      <wp:author_id>2</wp:author_id>
+      <wp:author_login>tobias</wp:author_login>
+      <wp:author_display_name><![CDATA[Tobias Ilg]]></wp:author_display_name>
+    </wp:author>
+
+    <wp:category>
+      <wp:term_id>3</wp:term_id>
+      <wp:category_nicename>sourcing</wp:category_nicename>
+      <wp:cat_name><![CDATA[Sourcing]]></wp:cat_name>
+    </wp:category>
+    <wp:category>
+      <wp:term_id>4</wp:term_id>
+      <wp:category_nicename>brewing</wp:category_nicename>
+      <wp:cat_name><![CDATA[Brewing]]></wp:cat_name>
+    </wp:category>
+
+    <!-- Attachments: referenced by _thumbnail_id, never downloaded by the engine. -->
+    <item>
+      <title>Quay at dawn</title>
+      <link>https://harborline.example.com/quay-at-dawn/</link>
+      <wp:post_id>100</wp:post_id>
+      <wp:post_name>quay-at-dawn</wp:post_name>
+      <wp:status>inherit</wp:status>
+      <wp:post_type>attachment</wp:post_type>
+      <wp:post_parent>10</wp:post_parent>
+      <wp:attachment_url>https://harborline.example.com/wp-content/uploads/2024/03/quay-at-dawn.jpg</wp:attachment_url>
+      <wp:postmeta>
+        <wp:meta_key>_wp_attachment_image_alt</wp:meta_key>
+        <wp:meta_value><![CDATA[Fog over the north quay before sunrise]]></wp:meta_value>
+      </wp:postmeta>
+      <wp:postmeta>
+        <wp:meta_key>_wp_attachment_mime</wp:meta_key>
+        <wp:meta_value><![CDATA[image/jpeg]]></wp:meta_value>
+      </wp:postmeta>
+    </item>
+    <item>
+      <title>Drum roaster</title>
+      <link>https://harborline.example.com/drum-roaster/</link>
+      <wp:post_id>101</wp:post_id>
+      <wp:post_name>drum-roaster</wp:post_name>
+      <wp:status>inherit</wp:status>
+      <wp:post_type>attachment</wp:post_type>
+      <wp:post_parent>12</wp:post_parent>
+      <wp:attachment_url>https://harborline.example.com/wp-content/uploads/2024/04/drum-roaster.jpg</wp:attachment_url>
+      <wp:postmeta>
+        <wp:meta_key>_wp_attachment_image_alt</wp:meta_key>
+        <wp:meta_value><![CDATA[A 12kg drum roaster mid-batch]]></wp:meta_value>
+      </wp:postmeta>
+      <wp:postmeta>
+        <wp:meta_key>_wp_attachment_mime</wp:meta_key>
+        <wp:meta_value><![CDATA[image/jpeg]]></wp:meta_value>
+      </wp:postmeta>
+    </item>
+
+    <!-- Static front page. Slug is "home"; WordPress serves it at "/". -->
+    <item>
+      <title>Harborline Coffee Roasters</title>
+      <link>https://harborline.example.com/</link>
+      <dc:creator><![CDATA[mara]]></dc:creator>
+      <content:encoded><![CDATA[
+<div class="elementor elementor-8 elementor-section-boxed" data-elementor-type="wp-page">
+  <p>We roast on the north quay every Tuesday and Friday, in batches small enough that one person can taste the whole day's output before it ships.</p>
+  <p>Bags leave the roastery within eighteen hours. Nothing sits in a warehouse waiting for a truck to fill up.</p>
+  <h2>What we are good at</h2>
+  <ul>
+    <li>Single-origin lots bought on repeat contracts, not spot</li>
+    <li>Wholesale accounts that get the same lot for a whole season</li>
+    <li>Roast profiles published with every bag</li>
+  </ul>
+  <p><a href="https://harborline.example.com/wholesale/">Wholesale enquiries</a> are answered inside two working days.</p>
+</div>
+<script src="https://harborline.example.com/wp-includes/js/wp-emoji-release.min.js" defer></script>
+      ]]></content:encoded>
+      <excerpt:encoded><![CDATA[Small-batch coffee roasted on the north quay.]]></excerpt:encoded>
+      <wp:post_id>10</wp:post_id>
+      <wp:post_date>2024-01-08 09:00:00</wp:post_date>
+      <wp:post_modified>2025-02-11 11:30:00</wp:post_modified>
+      <wp:post_name>home</wp:post_name>
+      <wp:status>publish</wp:status>
+      <wp:post_type>page</wp:post_type>
+      <wp:post_parent>0</wp:post_parent>
+      <wp:postmeta>
+        <wp:meta_key>_thumbnail_id</wp:meta_key>
+        <wp:meta_value><![CDATA[100]]></wp:meta_value>
+      </wp:postmeta>
+      <wp:postmeta>
+        <wp:meta_key>_yoast_wpseo_title</wp:meta_key>
+        <wp:meta_value><![CDATA[Harborline Coffee Roasters | North quay small-batch coffee]]></wp:meta_value>
+      </wp:postmeta>
+      <wp:postmeta>
+        <wp:meta_key>_yoast_wpseo_metadesc</wp:meta_key>
+        <wp:meta_value><![CDATA[Small-batch coffee roasted twice a week on the north quay and shipped within eighteen hours.]]></wp:meta_value>
+      </wp:postmeta>
+    </item>
+
+    <item>
+      <title>About</title>
+      <link>https://harborline.example.com/about/</link>
+      <dc:creator><![CDATA[mara]]></dc:creator>
+      <content:encoded><![CDATA[
+<p>Harborline started in 2016 with one 5kg roaster and a market stall. Nine years later the stall is gone and the roaster is bigger, but the batch size is deliberately still small.</p>
+<h2>How we buy</h2>
+<p>We buy on repeat contracts with four producers. If a lot is good we take it again the following season rather than chasing a new one for the label.</p>
+<p>Our roastery is open to visitors — see <a href="/about/our-roastery/">the roastery</a>.</p>
+      ]]></content:encoded>
+      <excerpt:encoded><![CDATA[One roaster, four producers, repeat contracts.]]></excerpt:encoded>
+      <wp:post_id>11</wp:post_id>
+      <wp:post_date>2024-01-09 09:00:00</wp:post_date>
+      <wp:post_modified>2024-11-02 08:15:00</wp:post_modified>
+      <wp:post_name>about</wp:post_name>
+      <wp:status>publish</wp:status>
+      <wp:post_type>page</wp:post_type>
+      <wp:post_parent>0</wp:post_parent>
+      <wp:postmeta>
+        <wp:meta_key>_yoast_wpseo_title</wp:meta_key>
+        <wp:meta_value><![CDATA[About Harborline]]></wp:meta_value>
+      </wp:postmeta>
+    </item>
+
+    <!-- Nested child page: origin URL is /about/our-roastery/, not /our-roastery/. -->
+    <item>
+      <title>Our Roastery</title>
+      <link>https://harborline.example.com/about/our-roastery/</link>
+      <dc:creator><![CDATA[tobias]]></dc:creator>
+      <content:encoded><![CDATA[
+<p>The roastery sits in unit 4 on the north quay. Two drum roasters, a cupping table, and a loading door that opens onto the water.</p>
+<p>Public cuppings run on the first Saturday of the month at 10:00.</p>
+      ]]></content:encoded>
+      <excerpt:encoded><![CDATA[Unit 4, north quay. Public cuppings monthly.]]></excerpt:encoded>
+      <wp:post_id>12</wp:post_id>
+      <wp:post_date>2024-01-10 09:00:00</wp:post_date>
+      <wp:post_modified>2024-01-10 09:00:00</wp:post_modified>
+      <wp:post_name>our-roastery</wp:post_name>
+      <wp:status>publish</wp:status>
+      <wp:post_type>page</wp:post_type>
+      <wp:post_parent>11</wp:post_parent>
+      <wp:postmeta>
+        <wp:meta_key>_thumbnail_id</wp:meta_key>
+        <wp:meta_value><![CDATA[101]]></wp:meta_value>
+      </wp:postmeta>
+    </item>
+
+    <item>
+      <title>Wholesale</title>
+      <link>https://harborline.example.com/wholesale/</link>
+      <dc:creator><![CDATA[mara]]></dc:creator>
+      <content:encoded><![CDATA[
+<div class="wpb_wrapper vc_row">
+  <p>We supply nineteen cafes and two grocers. Minimum order is 6kg a week, billed monthly.</p>
+  <h2>What an account includes</h2>
+  <ol>
+    <li>One seasonal house lot, held for the whole season</li>
+    <li>Dial-in visit when the lot changes</li>
+    <li>Next-morning delivery inside the harbour district</li>
+  </ol>
+</div>
+      ]]></content:encoded>
+      <excerpt:encoded><![CDATA[Accounts for cafes and grocers, 6kg weekly minimum.]]></excerpt:encoded>
+      <wp:post_id>13</wp:post_id>
+      <wp:post_date>2024-02-01 09:00:00</wp:post_date>
+      <wp:post_modified>2025-01-06 10:00:00</wp:post_modified>
+      <wp:post_name>wholesale</wp:post_name>
+      <wp:status>publish</wp:status>
+      <wp:post_type>page</wp:post_type>
+      <wp:post_parent>0</wp:post_parent>
+      <wp:postmeta>
+        <wp:meta_key>_yoast_wpseo_metadesc</wp:meta_key>
+        <wp:meta_value><![CDATA[Wholesale coffee accounts for cafes and grocers in the harbour district.]]></wp:meta_value>
+      </wp:postmeta>
+    </item>
+
+    <item>
+      <title>Contact</title>
+      <link>https://harborline.example.com/contact/</link>
+      <dc:creator><![CDATA[mara]]></dc:creator>
+      <content:encoded><![CDATA[
+<p>Unit 4, North Quay. Open Tuesday to Saturday, 08:00&ndash;16:00.</p>
+<p>Wholesale: <a href="mailto:wholesale@harborline.example.com">wholesale@harborline.example.com</a></p>
+      ]]></content:encoded>
+      <wp:post_id>14</wp:post_id>
+      <wp:post_date>2024-02-02 09:00:00</wp:post_date>
+      <wp:post_modified>2024-02-02 09:00:00</wp:post_modified>
+      <wp:post_name>contact</wp:post_name>
+      <wp:status>publish</wp:status>
+      <wp:post_type>page</wp:post_type>
+      <wp:post_parent>0</wp:post_parent>
+    </item>
+
+    <!-- Private page: not published, must not appear in the URL manifest. -->
+    <item>
+      <title>Staff Handbook</title>
+      <link>https://harborline.example.com/staff-handbook/</link>
+      <dc:creator><![CDATA[mara]]></dc:creator>
+      <content:encoded><![CDATA[<p>Internal only.</p>]]></content:encoded>
+      <wp:post_id>15</wp:post_id>
+      <wp:post_date>2024-03-01 09:00:00</wp:post_date>
+      <wp:post_name>staff-handbook</wp:post_name>
+      <wp:status>private</wp:status>
+      <wp:post_type>page</wp:post_type>
+      <wp:post_parent>0</wp:post_parent>
+    </item>
+
+    <item>
+      <title>Why we stopped buying on the spot market</title>
+      <link>https://harborline.example.com/why-we-stopped-buying-spot/</link>
+      <dc:creator><![CDATA[mara]]></dc:creator>
+      <content:encoded><![CDATA[
+<p>For three years we bought whatever scored well and was available. It made for an interesting menu and a miserable supply chain.</p>
+<p>Repeat contracts cost more per kilo and less per year, because we stopped paying for the cost of switching: new profiles, new packaging, new conversations with nineteen cafes.</p>
+<blockquote><p>The cheapest lot is the one you already know how to roast.</p></blockquote>
+      ]]></content:encoded>
+      <excerpt:encoded><![CDATA[Repeat contracts cost more per kilo and less per year.]]></excerpt:encoded>
+      <wp:post_id>30</wp:post_id>
+      <wp:post_date>2024-04-12 07:30:00</wp:post_date>
+      <wp:post_modified>2024-04-12 07:30:00</wp:post_modified>
+      <wp:post_name>why-we-stopped-buying-spot</wp:post_name>
+      <wp:status>publish</wp:status>
+      <wp:post_type>post</wp:post_type>
+      <wp:post_parent>0</wp:post_parent>
+      <category domain="category" nicename="sourcing"><![CDATA[Sourcing]]></category>
+      <category domain="post_tag" nicename="contracts"><![CDATA[Contracts]]></category>
+      <wp:postmeta>
+        <wp:meta_key>_thumbnail_id</wp:meta_key>
+        <wp:meta_value><![CDATA[100]]></wp:meta_value>
+      </wp:postmeta>
+      <wp:postmeta>
+        <wp:meta_key>_yoast_wpseo_title</wp:meta_key>
+        <wp:meta_value><![CDATA[Why we stopped buying coffee on the spot market]]></wp:meta_value>
+      </wp:postmeta>
+    </item>
+
+    <item>
+      <title>Dialing in a filter batch in four cups</title>
+      <link>https://harborline.example.com/dialing-in-four-cups/</link>
+      <dc:creator><![CDATA[tobias]]></dc:creator>
+      <content:encoded><![CDATA[
+<p>Four cups is enough. Grind coarse, grind fine, and two in between; taste them side by side while they are still warm.</p>
+<ol>
+  <li>Fix the dose and the water. Change one variable.</li>
+  <li>Brew all four before tasting any.</li>
+  <li>Pick the one you would drink a second cup of, not the one that scores best.</li>
+</ol>
+      ]]></content:encoded>
+      <excerpt:encoded><![CDATA[Grind coarse, grind fine, two in between.]]></excerpt:encoded>
+      <wp:post_id>31</wp:post_id>
+      <wp:post_date>2024-06-03 07:30:00</wp:post_date>
+      <wp:post_modified>2024-06-04 12:00:00</wp:post_modified>
+      <wp:post_name>dialing-in-four-cups</wp:post_name>
+      <wp:status>publish</wp:status>
+      <wp:post_type>post</wp:post_type>
+      <wp:post_parent>0</wp:post_parent>
+      <category domain="category" nicename="brewing"><![CDATA[Brewing]]></category>
+      <category domain="post_tag" nicename="filter"><![CDATA[Filter]]></category>
+      <category domain="post_tag" nicename="method"><![CDATA[Method]]></category>
+    </item>
+
+    <!--
+      Permalink shadowing: this post's slug matches the /wholesale/ page slug.
+      Only one of the two can own /wholesale/, and the page owns it. The engine
+      must not emit a post redirect that shadows a live page.
+    -->
+    <item>
+      <title>Wholesale pricing changes for the 2025 season</title>
+      <link>https://harborline.example.com/?p=32</link>
+      <dc:creator><![CDATA[mara]]></dc:creator>
+      <content:encoded><![CDATA[
+<p>Green prices moved about nine percent on our two Colombian contracts. House lot goes up by fifty cents a kilo from March; everything else holds.</p>
+      ]]></content:encoded>
+      <wp:post_id>32</wp:post_id>
+      <wp:post_date>2025-01-20 07:30:00</wp:post_date>
+      <wp:post_modified>2025-01-20 07:30:00</wp:post_modified>
+      <wp:post_name>wholesale</wp:post_name>
+      <wp:status>publish</wp:status>
+      <wp:post_type>post</wp:post_type>
+      <wp:post_parent>0</wp:post_parent>
+      <category domain="category" nicename="sourcing"><![CDATA[Sourcing]]></category>
+    </item>
+
+    <!-- Draft: must not appear in the URL manifest or the built site. -->
+    <item>
+      <title>Notes on the new cupping table</title>
+      <link>https://harborline.example.com/?p=33</link>
+      <dc:creator><![CDATA[tobias]]></dc:creator>
+      <content:encoded><![CDATA[<p>Unfinished.</p>]]></content:encoded>
+      <wp:post_id>33</wp:post_id>
+      <wp:post_date>2025-03-02 07:30:00</wp:post_date>
+      <wp:post_name>notes-new-cupping-table</wp:post_name>
+      <wp:status>draft</wp:status>
+      <wp:post_type>post</wp:post_type>
+      <wp:post_parent>0</wp:post_parent>
+    </item>
+  </channel>
+</rss>
