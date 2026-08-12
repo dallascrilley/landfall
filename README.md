@@ -26,7 +26,8 @@ redirect that lands in one hop.
 
 `pnpm verify` scans the built `dist/`, resolves every origin URL against the
 built routes and the redirect rules that will actually be deployed, and writes
-`reports/url-parity.json`. Verbatim output on the bundled fixture:
+`reports/url-parity.json`. Verbatim output of `pnpm verify:verbose` (the same
+run, plus a row per URL) on the bundled fixture:
 
 ```
 URL parity report
@@ -57,6 +58,8 @@ URL parity report
     /shop/
 
 PASS — all 8 WordPress URLs arrive.
+
+Report written to reports/url-parity.json
 ```
 
 Three lines in there are the whole design:
@@ -76,7 +79,7 @@ Three lines in there are the whole design:
 A verifier that only ever prints PASS proves nothing; it might be counting to
 zero. `pnpm prove:missing` copies the real build, deletes one page from the
 copy, and requires the verifier to fail **and to name that page** (totals block
-trimmed to the lines that changed):
+trimmed to the lines that changed — `routes built` also drops to 12):
 
 ```
 Removed /about/our-roastery/ from a copy of the build.
@@ -204,6 +207,12 @@ This is a URL-and-content engine. It is deliberately not a theme converter.
 - **Parity is URL parity, not visual or content parity.** The verifier proves a
   URL resolves to a page that was built. It does not compare rendered text,
   images or layout against the old site.
+- **Origin URLs are reconstructed from slugs, not read from permalinks.** The
+  manifest is derived from `wp:post_name` and the parent chain, which matches
+  WordPress's default `/%postname%/` structure. If the old site used a custom
+  permalink structure (`/%year%/%postname%/`, category prefixes), the "origin"
+  list will not be the URLs WordPress actually served — encode that structure
+  as redirect overrides, or the report can PASS against reconstructed URLs.
 - **Redirects are verified as a model, not as HTTP.** The check resolves rules
   against the built output. It does not make requests against a deployed host,
   so it cannot catch a hosting layer that ignores your `_redirects` file.
