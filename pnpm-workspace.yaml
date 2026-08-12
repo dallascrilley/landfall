@@ -1,0 +1,5 @@
+# pnpm 11 settings file. Build scripts are opt-in; these two need theirs to
+# fetch their platform binaries, so a cold `pnpm install` must not stop to ask.
+allowBuilds:
+  esbuild: true
+  sharp: true

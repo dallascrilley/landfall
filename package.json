@@ -1,0 +1,36 @@
+{
+	"name": "landfall",
+	"version": "0.1.0",
+	"type": "module",
+	"license": "MIT",
+	"description": "Migrates WordPress sites to Astro and proves every URL arrived.",
+	"engines": {
+		"node": ">=22.12.0"
+	},
+	"packageManager": "pnpm@11.20.0",
+	"scripts": {
+		"ingest": "tsx engine/cli.ts ingest",
+		"redirects": "tsx engine/cli.ts redirects",
+		"migrate": "pnpm run ingest && pnpm run redirects",
+		"build": "pnpm run migrate && astro build",
+		"dev": "pnpm run migrate && astro dev",
+		"preview": "astro preview",
+		"verify": "tsx engine/cli.ts verify",
+		"verify:verbose": "tsx engine/cli.ts verify --verbose",
+		"prove:missing": "tsx scripts/prove-missing-url.ts",
+		"test": "vitest run",
+		"type-check": "astro check",
+		"check": "pnpm run type-check && pnpm run test && pnpm run build && pnpm run verify && pnpm run prove:missing"
+	},
+	"dependencies": {
+		"astro": "^5.13.0",
+		"fast-xml-parser": "^5.2.0"
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.4",
+		"@types/node": "^26.2.0",
+		"tsx": "^4.20.0",
+		"typescript": "^5.9.0",
+		"vitest": "^3.2.0"
+	}
+}
