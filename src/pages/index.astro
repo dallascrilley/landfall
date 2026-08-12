@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import { pages } from "../content";
+
+const home = pages().find((page) => page.route === "/");
+if (!home) throw new Error("No page maps to `/` — check `frontPageSlug` in landfall.config.ts.");
+---
+
+<Base title={home.seo.title ?? home.title} description={home.seo.description}>
+	<h1>{home.title}</h1>
+	<article set:html={home.html} />
+</Base>

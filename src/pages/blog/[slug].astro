@@ -1,0 +1,21 @@
+---
+import type { GetStaticPaths } from "astro";
+import Base from "../../layouts/Base.astro";
+import { type ContentEntry, posts } from "../../content";
+
+export const getStaticPaths = (() =>
+	posts().map((post) => ({ params: { slug: post.slug }, props: { post } }))) satisfies GetStaticPaths;
+
+const { post } = Astro.props as { post: ContentEntry };
+const date = post.date ? new Date(post.date.replace(" ", "T")).toISOString().slice(0, 10) : "";
+---
+
+<Base title={post.seo.title ?? post.title} description={post.seo.description ?? post.excerpt}>
+	<h1>{post.title}</h1>
+	<p class="meta">
+		{date}
+		{post.author ? ` · ${post.author}` : ""}
+		{post.categories.length > 0 ? ` · ${post.categories.join(", ")}` : ""}
+	</p>
+	<article set:html={post.html} />
+</Base>

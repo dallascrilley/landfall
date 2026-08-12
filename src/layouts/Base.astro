@@ -1,0 +1,133 @@
+---
+/**
+ * Minimal layout, written for this repository. It exists so the engine has a
+ * real Astro build to verify against, not as a theme — replace it with your own.
+ */
+interface Props {
+	title: string;
+	description?: string | null;
+}
+
+const { title, description } = Astro.props;
+const nav = [
+	{ href: "/", label: "Home" },
+	{ href: "/about/", label: "About" },
+	{ href: "/wholesale/", label: "Wholesale" },
+	{ href: "/blog/", label: "Blog" },
+	{ href: "/contact/", label: "Contact" },
+];
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		{description ? <meta name="description" content={description} /> : null}
+		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+	</head>
+	<body>
+		<header>
+			<nav>
+				{nav.map((item) => <a href={item.href}>{item.label}</a>)}
+			</nav>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer>
+			<p>Built with Landfall. Content migrated from a WordPress export.</p>
+		</footer>
+		<style is:global>
+			:root {
+				color-scheme: light dark;
+				--ink: #16191d;
+				--paper: #fbfaf8;
+				--muted: #5d6570;
+				--rule: #dcd8d2;
+			}
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--ink: #eceae6;
+					--paper: #16191d;
+					--muted: #9aa2ad;
+					--rule: #2c3138;
+				}
+			}
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				background: var(--paper);
+				color: var(--ink);
+				font: 16px/1.65 ui-serif, Georgia, serif;
+			}
+			header,
+			main,
+			footer {
+				max-width: 44rem;
+				margin: 0 auto;
+				padding: 0 1.25rem;
+			}
+			header {
+				padding-top: 1.5rem;
+				padding-bottom: 1.5rem;
+				border-bottom: 1px solid var(--rule);
+			}
+			nav {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1.25rem;
+				font: 600 0.85rem/1 ui-sans-serif, system-ui, sans-serif;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+			a {
+				color: inherit;
+			}
+			main {
+				padding-top: 2.5rem;
+				padding-bottom: 3.5rem;
+			}
+			h1 {
+				font-size: 2rem;
+				line-height: 1.15;
+				margin: 0 0 1rem;
+			}
+			h2 {
+				font-size: 1.3rem;
+				margin: 2rem 0 0.75rem;
+			}
+			img {
+				max-width: 100%;
+				height: auto;
+			}
+			blockquote {
+				margin: 1.5rem 0;
+				padding-left: 1rem;
+				border-left: 3px solid var(--rule);
+				color: var(--muted);
+			}
+			footer {
+				padding: 1.5rem 1.25rem 3rem;
+				border-top: 1px solid var(--rule);
+				color: var(--muted);
+				font-size: 0.85rem;
+			}
+			.meta {
+				color: var(--muted);
+				font: 0.85rem/1.5 ui-sans-serif, system-ui, sans-serif;
+			}
+			.entries {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.entries li {
+				padding: 1.25rem 0;
+				border-bottom: 1px solid var(--rule);
+			}
+		</style>
+	</body>
+</html>

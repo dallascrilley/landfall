@@ -1,0 +1,26 @@
+---
+import Base from "../../layouts/Base.astro";
+import { posts } from "../../content";
+
+const entries = posts();
+const formatDate = (value: string | null) =>
+	value ? new Date(value.replace(" ", "T")).toISOString().slice(0, 10) : "";
+---
+
+<Base title="Blog" description="Posts migrated from the WordPress export.">
+	<h1>Blog</h1>
+	<ul class="entries">
+		{
+			entries.map((post) => (
+				<li>
+					<a href={post.route}>{post.title}</a>
+					<p class="meta">
+						{formatDate(post.date)}
+						{post.author ? ` · ${post.author}` : ""}
+					</p>
+					{post.excerpt ? <p>{post.excerpt}</p> : null}
+				</li>
+			))
+		}
+	</ul>
+</Base>
