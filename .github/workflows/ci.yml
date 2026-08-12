@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# A fast follow-up push should cancel the run it superseded.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # type-check → unit tests → migrate the fixture → build → parity verify →
+      # deliberate-failure proof. The last two are the point: the build is only
+      # green if every URL in the WordPress export arrives, AND the verifier is
+      # still capable of noticing when one does not.
+      - run: pnpm run check
+
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: url-parity-report
+          path: reports/url-parity.json
+          if-no-files-found: warn
