@@ -67,6 +67,38 @@ export function toNetlify(model: Redirect[]): string {
 	return model.map((rule) => `${clean(rule.from)}  ${clean(rule.to)}  ${rule.status}`).join("\n");
 }
 
+/**
+ * Parse a Netlify/Cloudflare `_redirects` body back into the model.
+ * Used by `verify` so a hand-edited host file cannot silently disagree with
+ * the rules the parity check resolves against.
+ */
+export function parseNetlify(text: string): Redirect[] {
+	const rules: Redirect[] = [];
+	for (const raw of text.split(/\r?\n/)) {
+		const line = raw.trim();
+		if (!line || line.startsWith("#")) continue;
+		const parts = line.split(/\s+/);
+		if (parts.length < 2) {
+			throw new Error(`Invalid _redirects line: ${JSON.stringify(raw)}`);
+		}
+		const status = parts.length >= 3 ? Number(parts[2]) : 301;
+		if (!Number.isFinite(status)) {
+			throw new Error(`Invalid status on _redirects line: ${JSON.stringify(raw)}`);
+		}
+		rules.push({ from: parts[0]!, to: parts[1]!, status });
+	}
+	return rules;
+}
+
+/** Order-independent equality on from/to/status. */
+export function sameRedirectModel(a: Redirect[], b: Redirect[]): boolean {
+	const key = (rule: Redirect) => `${rule.from}\0${rule.to}\0${rule.status}`;
+	const left = a.map(key).sort();
+	const right = b.map(key).sort();
+	if (left.length !== right.length) return false;
+	return left.every((entry, index) => entry === right[index]);
+}
+
 /** `vercel.json` redirects array (`permanent` = 301). */
 export function toVercel(model: Redirect[]): {
 	redirects: { source: string; destination: string; permanent: boolean }[];

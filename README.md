@@ -1,5 +1,8 @@
 # Landfall
 
+[![CI](https://github.com/dallascrilley/landfall/actions/workflows/ci.yml/badge.svg)](https://github.com/dallascrilley/landfall/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **Migrates WordPress sites to Astro and proves every URL arrived.**
 
 Moving a WordPress site to a static build is mostly mechanical. The part that
@@ -100,6 +103,19 @@ prove:missing PASSED — exit 1, one failure, reported as:
 Both commands run in CI. The build is green only when every URL arrives *and*
 the verifier is still capable of noticing when one does not.
 
+> **Permalink assumption (read this before trusting the PASS).** Origin URLs in
+> the manifest are reconstructed from `wp:post_name` and the parent chain, which
+> matches WordPress's default `/%postname%/` structure. If the old site used a
+> custom structure (`/%year%/%postname%/`, category bases, etc.), the "origin"
+> list is not the set of URLs WordPress actually served — encode that structure
+> as redirect overrides, or the report can PASS against reconstructed paths.
+> The same section under [Honest boundaries](#honest-boundaries) expands this.
+
+When `public/_redirects` or `content/redirects.json` already exist on disk,
+`pnpm verify` also checks that those host files still match the redirect model
+it resolves against, so a hand-edit cannot ship rules the parity check never
+saw.
+
 ---
 
 ## Quickstart
@@ -136,7 +152,7 @@ parity:    { ignore: [] },           // URLs you are deliberately not migrating
 | `pnpm verify` | parity check against `dist/`; exit 1 on any unreachable URL |
 | `pnpm verify:verbose` | same, plus a row per URL and the unclaimed built routes |
 | `pnpm prove:missing` | deliberate-failure proof |
-| `pnpm test` | 46 unit tests over ingestion, transform, redirects, parity |
+| `pnpm test` | 47 unit tests over ingestion, transform, redirects, parity |
 | `pnpm check` | everything above, in the order CI runs it |
 
 ---
@@ -216,6 +232,8 @@ This is a URL-and-content engine. It is deliberately not a theme converter.
 - **Redirects are verified as a model, not as HTTP.** The check resolves rules
   against the built output. It does not make requests against a deployed host,
   so it cannot catch a hosting layer that ignores your `_redirects` file.
+  Off-site redirect targets count as arrived without a reachability probe —
+  there is no live origin to hit in CI.
 - **Only Yoast SEO postmeta is read.** Rank Math, AIOSEO and friends are not
   parsed; their fields come through as absent, not as errors.
 - **WXR only.** Ingestion reads the export file. There is no REST API crawler
@@ -224,7 +242,10 @@ This is a URL-and-content engine. It is deliberately not a theme converter.
   8-URL Harborline export in this repo is not one of them, and its scale is not
   evidence about behavior on a 20,000-node site.
 
----
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and the CI gate. Security
+reports go through [SECURITY.md](SECURITY.md), not public issues.
 
 ## License
 

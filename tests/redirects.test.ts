@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { buildRedirects, toAstro, toNetlify, toVercel } from "../engine/redirects";
+import {
+	buildRedirects,
+	parseNetlify,
+	sameRedirectModel,
+	toAstro,
+	toNetlify,
+	toVercel,
+} from "../engine/redirects";
 import type { UrlEntry } from "../engine/types";
 
 const url = (partial: Partial<UrlEntry> & Pick<UrlEntry, "origin" | "target">): UrlEntry => ({
@@ -79,5 +86,14 @@ describe("serializers", () => {
 		const map = toAstro([...model, { from: "/wp-admin/*", to: "/", status: 301 }]);
 		expect(map["/hello/"]).toEqual({ status: 301, destination: "/blog/hello/" });
 		expect(map["/wp-admin/*"]).toBeUndefined();
+	});
+
+	it("round-trips Netlify text so verify can detect a hand-edited host file", () => {
+		const full = buildRedirects({
+			urls: [url({ origin: "/hello/", target: "/blog/hello/" })],
+		});
+		const text = toNetlify(full);
+		expect(sameRedirectModel(full, parseNetlify(text))).toBe(true);
+		expect(sameRedirectModel(full, parseNetlify(`${text}\n/evil/  /x/  301`))).toBe(false);
 	});
 });

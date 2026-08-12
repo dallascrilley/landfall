@@ -18,7 +18,14 @@ import { config } from "../landfall.config";
 import { paths } from "./config";
 import { scanDist } from "./dist-scan";
 import { verifyParity } from "./parity";
-import { buildRedirects, toAstro, toNetlify, toVercel } from "./redirects";
+import {
+	buildRedirects,
+	parseNetlify,
+	sameRedirectModel,
+	toAstro,
+	toNetlify,
+	toVercel,
+} from "./redirects";
 import { formatReport } from "./report";
 import { transformHtml } from "./transform";
 import type { UrlEntry, WpEntry } from "./types";
@@ -146,6 +153,52 @@ function redirects(): void {
 	for (const file of written) console.log(`  -> ${file}`);
 }
 
+/**
+ * When host redirect files exist on disk, they must match the model `verify`
+ * resolves against. Otherwise a hand-edit to `public/_redirects` (or the Astro
+ * map) could ship rules the parity check never saw.
+ */
+function assertDeployedRedirectsMatchModel(rules: ReturnType<typeof buildRedirects>): string | null {
+	if (config.redirects.targets.includes("netlify")) {
+		const file = resolveRoot(paths.publicRedirects);
+		if (fs.existsSync(file)) {
+			const onDisk = parseNetlify(fs.readFileSync(file, "utf8"));
+			if (!sameRedirectModel(rules, onDisk)) {
+				return (
+					`${paths.publicRedirects} does not match the redirect model the verifier uses. ` +
+					`Run \`pnpm redirects\` (or \`pnpm build\`) and stop hand-editing the host file.`
+				);
+			}
+		}
+	}
+	if (config.redirects.targets.includes("astro")) {
+		const file = resolveRoot(paths.redirectsJson);
+		if (fs.existsSync(file)) {
+			const onDisk = JSON.parse(fs.readFileSync(file, "utf8")) as Record<
+				string,
+				{ status: number; destination: string }
+			>;
+			const expected = toAstro(rules);
+			const diskKeys = Object.keys(onDisk).sort();
+			const expectedKeys = Object.keys(expected).sort();
+			const equal =
+				diskKeys.length === expectedKeys.length &&
+				diskKeys.every((key) => {
+					const a = onDisk[key];
+					const b = expected[key];
+					return a && b && a.status === b.status && a.destination === b.destination;
+				});
+			if (!equal) {
+				return (
+					`${paths.redirectsJson} does not match the redirect model the verifier uses. ` +
+					`Run \`pnpm redirects\` (or \`pnpm build\`) and stop hand-editing the map.`
+				);
+			}
+		}
+	}
+	return null;
+}
+
 function verify(argv: string[]): number {
 	const distDir = path.resolve(repoRoot, flag(argv, "dist") ?? paths.dist);
 	if (!fs.existsSync(distDir)) {
@@ -155,6 +208,13 @@ function verify(argv: string[]): number {
 
 	const urls = readJson<UrlEntry[]>(paths.urls);
 	const rules = buildRedirects({ urls, overrides: config.redirects.overrides });
+
+	const drift = assertDeployedRedirectsMatchModel(rules);
+	if (drift) {
+		console.error(drift);
+		return 1;
+	}
+
 	const report = verifyParity({
 		urls,
 		rules,
