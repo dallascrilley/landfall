@@ -41,7 +41,7 @@
     "check": "pnpm run type-check && pnpm run test && pnpm run build && pnpm run verify && pnpm run prove:missing"
   },
   "dependencies": {
-    "astro": "^7.2.0",
+    "astro": "^7.2.2",
     "fast-xml-parser": "^5.2.0"
   },
   "devDependencies": {
